@@ -56,7 +56,7 @@ class GameServer {
             console.log("new session");
             this.validateUser(socket,
                 (userName) => {
-                    var user = this.#createUser(userName, socket, io);
+                    var user = this._createUser(userName, socket, io);
 
                     this.#users['' + user.uid] = user;
                     socket['user'] = user;
@@ -118,8 +118,8 @@ class GameServer {
      * @param {SocketIO.Socket} socket
      * @param {import("socket.io").Server} io
      */
-    // @ts-ignore
-    #createUser(userName, socket, io) {
+
+    _createUser(userName, socket, io) {
         var user = new User(io);
         user.uid = ++this.#uidIterator;
         user.name = userName || (user.name + user.uid);
