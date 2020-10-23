@@ -10,8 +10,12 @@ app.get('/', (req, res) => {
     res.send("online users: " + ogs.onlineUsers)
 });
 
+let port = process.env.PORT;
+if (port == null || port == "") {
+  // @ts-ignore
+  port = 8000;
+}
 
-
-http.listen(3000, () => {
+http.listen(port, () => {
     console.log('listening on *:3000');
 });
