@@ -2,12 +2,13 @@
 var app = require('express')();
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
-var ogs = require('./omarGameServer')(io);
+
+var ogs = new (require('./OmarGameServer/server'))();
 //import ogs  from './omarGameServer';
 
 
 app.get('/', (req, res) => {
-    res.send("online users: " + ogs.onlineUsers)
+  res.send("online users: " + ogs.userManager.getUsersNumber());
 });
 
 
@@ -18,5 +19,9 @@ if (port == null || port == "") {
 }
 
 http.listen(port, () => {
-    console.log('listening on *:'+port);
+  console.log('listening on *:' + port);
 });
+
+
+
+ogs.Start(io);
